@@ -43,6 +43,7 @@ class BookDetails extends StatelessWidget {
           const MbSizedBox(height: 3),
           Wrap(
             spacing: scaler.sizer.setWidth(3),
+            runSpacing: scaler.sizer.setWidth(2),
             alignment: WrapAlignment.center,
             children: [
               BookFeatureCard(
@@ -76,7 +77,7 @@ class BookDetails extends StatelessWidget {
             ],
           ),
           const MbSizedBox(height: 3),
-          MbText(details?.desc),
+          MbText(details?.desc, textAlign: TextAlign.justify,),
         ],
       ),
     );

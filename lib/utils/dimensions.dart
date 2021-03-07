@@ -47,13 +47,13 @@ class _MbDimension {
 }
 
 class _MbFontSizer {
-  num _shortestSide;
+  num _scale;
   _MbFontSizer(BuildContext context) {
-    _shortestSide = MediaQuery.of(context).size.shortestSide;
+    _scale = (MediaQuery.of(context).size.longestSide + MediaQuery.of(context).size.shortestSide) / 4;
   }
 
   num sp(double percentage) {
-    return ((_shortestSide) * ((percentage ?? 35) / 1000)).ceil().toDouble();
+    return (_scale * ((percentage ?? 35) / 1000)).toDouble();
   }
 }
 

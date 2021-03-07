@@ -41,7 +41,6 @@ class BookDetailView extends StatelessWidget {
           headerSliverBuilder: (_, __) {
             return [
               SliverAppBar(
-                automaticallyImplyLeading: false,
                 title: MbText(
                   book?.title,
                   style: MbTextStyle.black,
@@ -49,72 +48,71 @@ class BookDetailView extends StatelessWidget {
               )
             ];
           },
-          body: ValueListenableBuilder(
-            valueListenable: model.bookRef,
-            builder: (context, Future<BookDetail> future, _) {
-              return FutureBuilder(
-                future: future,
-                builder: (context, AsyncSnapshot<BookDetail> task) {
-                  if (task.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: Apploader(),
-                    );
-                  }
-                  if (task.hasError) {
-                    return Center(
-                      child: MbErrorState(
-                        errorMessage: parseError(
-                          task.error,
-                          "An unexpected error occured when fetching books list",
-                          context,
-                        ),
-                        onRetry: () {
-                          model.getBookDetail(book);
-                        },
-                      ),
-                    );
-                  }
-                  if (!(task.hasData)) {
-                    return Center(
-                      child: MbEmptyState(
-                        message:
-                            "We could not fetch details for the selected books",
-                        subMessage:
-                            "A search for details for the selected book failed",
-                        onRetry: () {
-                          model.getBookDetail(book);
-                        },
-                      ),
-                    );
-                  }
-                  return Container(
-                    padding: scaler.insets.symmetric(horizontal: 5),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Hero(
-                            tag: "Image::${book.isbn13}",
-                            child: CircleAvatar(
-                              backgroundImage:
-                                  CachedNetworkImageProvider(book.image),
-                              radius: 70,
-                              backgroundColor: MbColors.purple,
-                            ),
-                          ),
-                        ),
-                        const MbSizedBox(height: 1),
-                        Expanded(
-                          child: BookDetails(task?.data),
-                        ),
-                      ],
+          body: Container(
+            padding: scaler.insets.symmetric(horizontal: 5),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Hero(
+                    tag: "Image::${book.isbn13}",
+                    child: CircleAvatar(
+                      backgroundImage: CachedNetworkImageProvider(book.image),
+                      radius: 70,
+                      backgroundColor: MbColors.purple,
                     ),
-                  );
-                },
-              );
-            },
+                  ),
+                ),
+                const MbSizedBox(height: 1),
+                Expanded(
+                  child: ValueListenableBuilder(
+                    valueListenable: model.bookRef,
+                    builder: (context, Future<BookDetail> future, _) {
+                      return FutureBuilder(
+                        future: future,
+                        builder: (context, AsyncSnapshot<BookDetail> task) {
+                          if (task.connectionState == ConnectionState.waiting) {
+                            return Center(
+                              child: Apploader(),
+                            );
+                          }
+                          if (task.hasError) {
+                            return Center(
+                              child: MbErrorState(
+                                errorMessage: parseError(
+                                  task.error,
+                                  "An unexpected error occured when fetching books list",
+                                  context,
+                                ),
+                                onRetry: () {
+                                  model.getBookDetail(book);
+                                },
+                              ),
+                            );
+                          }
+                          if (!(task.hasData)) {
+                            return Center(
+                              child: MbEmptyState(
+                                message:
+                                    "We could not fetch details for the selected books",
+                                subMessage:
+                                    "A search for details for the selected book failed",
+                                onRetry: () {
+                                  model.getBookDetail(book);
+                                },
+                              ),
+                            );
+                          }
+                          return BookDetails(task?.data);
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

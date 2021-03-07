@@ -39,7 +39,7 @@ class MolteoBooks extends StatelessWidget {
         routes: MbRoutes.staticRoutes,
         onGenerateRoute: MbRoutes.dynamicRoutes,
       ),
-      isMock: true,
+      isMock: false,
     );
   }
 }

@@ -65,25 +65,33 @@ class BookListTile extends StatelessWidget {
                   ),
                   MbText(book?.description ?? ""),
                   const MbSizedBox(height: 2),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    columnWidths: {
+                      0: FlexColumnWidth(5),
+                      1: FlexColumnWidth(.3),
+                      2: FlexColumnWidth(5),
+                    },
                     children: [
-                      MbText(
+                      TableRow(
+                        children: [
+                          MbText(
                         book?.price ?? "",
                         style: MbTextStyle.bold.copyWith(
                           color: MbColors.red,
                         ),
                       ),
-                      Spacer(),
+                      const SizedBox(),
                       MbText(
                         "#${book?.isbn13 ?? ""}",
                         style: MbTextStyle.bold.copyWith(
                           color: MbColors.purple,
                         ),
                       ),
+                        ]
+                      )
                     ],
-                  )
+                  ),
                 ],
               )
             ],
