@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:molteo_books/models/http/response/library_response_models.dart';
 import 'package:molteo_books/services/http/base_http.dart';
+import 'package:molteo_books/services/http/library/library_contract.dart';
 import 'package:molteo_books/services/repository/repository_service.dart';
 
-class LibraryHttpService extends MbHttpService with CacheService {
+class LibraryHttpService extends MbHttpService
+    with CacheService
+    implements LibraryService {
   ///
   /// ### LibraryHttpService getBooks
   ///
@@ -12,7 +17,8 @@ class LibraryHttpService extends MbHttpService with CacheService {
   /// When provided getBooks calls the `/search` endpoint to get books matching the string
   /// Otherwise it call the `/new` books enedpoint
   ///
-  Future<LibraryResponse> getBooks({String query}) async {
+  @override
+  FutureOr<LibraryResponse> getBooks({String query}) async {
     try {
       final path = query == null || query.isEmpty ? "/new" : "/search/$query";
       final req = await http.get(path);
@@ -36,7 +42,9 @@ class LibraryHttpService extends MbHttpService with CacheService {
   /// When provided getBooks calls the `/search` endpoint to get books matching the string
   /// Otherwise it call the `/new` books enedpoint
   ///
-  Future<BookDetail> getBookDetail(String isbn) async {
+  @override
+  FutureOr<BookDetail> getBookDetail(String isbn) async {
+    if (isbn == null || isbn.isEmpty) return null;
     try {
       final req = await http.get("/books/$isbn");
       cacheResponse(req);
