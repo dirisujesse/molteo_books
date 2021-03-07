@@ -20,9 +20,9 @@ class LibraryResponse {
   List<Book> books;
 
   LibraryResponse.fromJson(Map<String, dynamic> json)
-      : total = int.tryParse(json["total"]),
-        page = int.tryParse(json["page"]),
-        error = int.tryParse(json["error"]),
+      : total = int.tryParse(json["total"] ?? "") ?? 0,
+        page = int.tryParse(json["page"] ?? "") ?? 0,
+        error = int.tryParse(json["error"] ?? "") ?? 0,
         books = List<Book>.from(
           json["books"].map(
             (x) => Book.fromJson(x),
@@ -54,6 +54,11 @@ class Book {
   String price;
   String image;
   String url;
+
+  String get description {
+    if (subtitle != null && subtitle.isNotEmpty) return subtitle;
+    return title;
+  }
 
   Book.fromJson(Map json)
       : title = json["title"],

@@ -12,7 +12,7 @@ class LibraryMockHttpService implements LibraryService {
     try {
       LibraryResponse data = LibraryResponse.fromJson(mockLibraryData);
       if (query == null || query.isEmpty) return data;
-      data.books = data.books.where((it) => contains(it.title, query));
+      data.books = data.books.where((it) => contains(it.title, query)).toList();
       return data;
     } on DioError catch (e) {
       throw e;

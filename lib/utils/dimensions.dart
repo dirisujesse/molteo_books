@@ -6,6 +6,7 @@ import 'package:flutter/widgets.dart'
         EdgeInsets,
         RenderBox,
         Offset;
+import 'package:molteo_books/models/enums/screen_type.dart';
 
 class _MbDimension {
   MediaQueryData _queryData;
@@ -13,16 +14,21 @@ class _MbDimension {
     _queryData = MediaQuery.of(context);
   }
 
+  ScreenType get screenType {
+    if (_queryData.size.width > 500) return ScreenType.TABLET;
+    return ScreenType.MOBILE;
+  }
+
   double get topInset {
     return _queryData.padding.top;
   }
 
   double get width {
-    return _queryData.size.width;
+    return _queryData.size.shortestSide;
   }
 
   double get height {
-    return _queryData.size.height;
+    return _queryData.size.longestSide;
   }
 
   double setHeight(double percentage) {

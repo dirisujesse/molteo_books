@@ -16,7 +16,6 @@ void startApp() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   await Hive.openBox("app_data");
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,
@@ -33,7 +32,7 @@ class MolteoBooks extends StatelessWidget {
   Widget build(BuildContext context) {
     return StateWrapper(
       child: MaterialApp(
-        title: 'Schoolable Pay',
+        title: 'Molteo Books',
         home: MbRoutes.home,
         theme: MbThemes.defaultTheme,
         debugShowCheckedModeBanner: false,

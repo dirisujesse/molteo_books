@@ -16,18 +16,12 @@ class MbRoutes {
 
   static Map<String, Widget Function(BuildContext)> staticRoutes = {
     splash: (BuildContext context) => const SplashPage(),
-    booksList: (BuildContext context) => const LibraryListPage(),
+    booksList: (BuildContext context) => const LibraryHomePage(),
+    bookDetail: (BuildContext context) => const LibraryDetailPage(),
   };
 
   static Route<dynamic> dynamicRoutes(RouteSettings settings) {
     switch (settings.name) {
-      case bookDetail:
-        return MaterialPageRoute(
-          builder: (context) {
-            return const LibraryDetailPage();
-          },
-          fullscreenDialog: true,
-        );
       default:
         return MaterialPageRoute(
           builder: (context) {

@@ -17,12 +17,11 @@ class MbEmptyState extends StatelessWidget {
 
   MbEmptyState({
     @required this.message,
-    @required this.onRetry,
-    @required this.subMessage,
+    this.onRetry,
+    this.subMessage,
     this.mainAxisAlignment = MainAxisAlignment.center,
     this.crossAxisAlignment = CrossAxisAlignment.center,
-  })  : assert(message != null),
-        assert(onRetry != null);
+  })  : assert(message != null);
   @override
   Widget build(BuildContext context) {
     final scaler = MbScaleUtil(context);
@@ -54,6 +53,7 @@ class MbEmptyState extends StatelessWidget {
               style: MbTextStyle.light,
             ),
           ),
+        if (onRetry != null)
         Flexible(
           child: FittedBox(
             child: MbButton(

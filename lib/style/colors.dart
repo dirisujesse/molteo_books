@@ -41,5 +41,6 @@ static const MaterialColor secondary = const MaterialColor(
   static const Color red = Color(0xFFF01414);
   static const Color purple = Color(0xFF353553);
   static const Color darkGrey = Color(0xFF656F78);
+  static const Color grey = Color.fromRGBO(109, 109, 109, .06);
 
 }
